@@ -82,6 +82,7 @@ elseif (MINGW)
 endif ()
 option (ENABLE_PACKAGE_CONFIG "Generate and install package config file" ON)
 option (INSTALL_PKGCONFIG_MODULE "Generate and install pkg-config module" ON)
+option (LIBSNDFILE_DISABLE_INSTALL "disables installation of libsndfile" OFF)
 
 list (APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 if (CMAKE_VERSION VERSION_LESS 3.14)
@@ -783,7 +784,8 @@ endif ()
 #
 # Installation
 #
-
+if (LIBSNDFILE_DISABLE_INSTALL)
+else()
 if (ENABLE_PACKAGE_CONFIG)
 
 	if (WIN32 AND (NOT MINGW) AND (NOT CYGWIN))
@@ -904,7 +906,7 @@ install (FILES ${dist_doc_DATA} DESTINATION ${CMAKE_INSTALL_DOCDIR})
 if (INSTALL_PKGCONFIG_MODULE)
 	install (FILES ${CMAKE_CURRENT_BINARY_DIR}/sndfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 endif ()
-
+endif ()
 #
 # Testing
 #
